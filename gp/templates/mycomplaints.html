@@ -1,6 +1,7 @@
 {% extends 'home.html'%}
 {% load staticfiles %}
 
+{% block mycomplaints%}
 <span class="mdl-layout-title">Complaints</span>
 	{% for x in mycomplaints%}
 	<center>
@@ -27,3 +28,4 @@
 </center>
 <br>
 {% endfor %}
+{% endblock%}

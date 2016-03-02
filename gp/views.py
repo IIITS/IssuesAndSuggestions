@@ -102,7 +102,7 @@ class ViewComplaintByDomain(TemplateView):
 
 
 class viewMyComplaints(TemplateView):
-	template_name = 'mycomplaint.html'
+	template_name = 'mycomplaints.html'
 
 	def dispatch(self,*args,**kwargs):
 		return super(viewMyComplaints,self).dispatch(*args,**kwargs)
