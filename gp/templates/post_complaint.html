@@ -1,0 +1,47 @@
+{%extends 'home.html'%}
+{% load staticfiles %}
+
+{% block Issueform%}
+<center>
+<h3 style="color:blue;"> Post an Issue</h3>
+<form action="" method="post">{% csrf_token%}
+  <div class="mdl-textfield mdl-js-textfield">
+    {{form.title}}
+    <label class="mdl-textfield__label">Enter the title...</label>
+  </div>
+  <br>
+  <br>
+ {%for i in form.domain%}
+  	<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" style="margin:5px;">
+  		{{i}}
+  	</label>
+ {%endfor%}
+ <br>
+ <br>
+<div class="mdl-textfield mdl-js-textfield">
+  	{{form.description}}
+  	<label class="mdl-textfield__label">Write about the issue here...</label>
+</div>
+<br>
+<br>
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+ POST
+</button>
+</form>
+</center>
+<script>
+$(document).ready(function(){
+	$('#radio-hostel').hide();
+	$('#id_domain').on('change',function(){	
+	var domainval = $('#id_domain').val();
+	
+	if(domainval== 'Hostel'){
+		$('#radio-hostel').show();
+	}
+	else{
+		$('#radio-hostel').hide();
+	}
+	});
+});
+</script>
+{% endblock%}  

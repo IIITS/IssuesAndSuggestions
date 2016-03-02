@@ -1,0 +1,39 @@
+h1{
+	font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+	text-align: center;
+	color: #FFFFFF;
+
+}
+#header{
+	background-color: #2A4B27;
+	border-bottom: solid #448C3D;
+	border-bottom-width:15px;
+	margin-top: 0;
+}
+
+#upvotes{
+	margin-left:10px; 
+	margin-bottom: 10px;
+}
+#downvotes{
+	margin-left:10px;
+}
+.comp-desc{
+	font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+	font-size:20px;
+}
+.comp-name{
+	font-size: 20px;
+}
+.container{
+	background-color: #f1f1f1;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16);
+}
+
+li{
+	display: inline;
+}
+
+#about{
+	margin-top:20px;
+}

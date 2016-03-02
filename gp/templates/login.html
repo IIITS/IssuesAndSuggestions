@@ -1,0 +1,40 @@
+{% load staticfiles %}
+<html>
+    {% include 'resources.html' %}
+
+
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class = "mdl-layout__header mdl-layout__header">
+      <center><span class="mdl-layout-title" style="font-size:30px;margin-top:10px;"> I &amp; S Portal</span></center>
+    </header>
+	
+<center>
+  <br>
+  <br>
+<div class="mdl-card mdl-shadow--2dp">
+			<div class="mdl-card__title">
+          		<h2 class="mdl-card__title-text">Please Login</h2>
+          	</div>
+  			<div class="mdl-card__supporting-text">
+  				<form action="" method="post">
+          			{%csrf_token%}
+					{% if form.non_field_errors %}
+						{{ form_error }}
+					{% endif %}
+  					<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    					{{form.username}}
+    					<label class="mdl-textfield__label" for="username">Enter your Email...</label>
+  					</div>
+          			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    					{{form.password}}
+    					<label class="mdl-textfield__label" for="password">Enter your password...</label>
+  					</div>
+  					<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+  					Login
+					</button>
+				</form>
+			</div>
+		</div>
+	</center>	
+	
+</div>

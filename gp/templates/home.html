@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<html>
+    {% include 'resources.html' %}
+
+<body>
+    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">I&amp;S Portal</span>
+          <div class="mdl-layout-spacer"></div>
+          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+            <li class="mdl-menu__item">Edit Profile</li>
+            <li class="mdl-menu__item">Change Password</li>
+            <li class="mdl-menu__item">Sign Out</li>
+          </ul>
+        </div>
+      </header>
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <header class="demo-drawer-header">
+          <img src="images/user.jpg" class="demo-avatar">
+        </header>
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+          <a class="mdl-navigation__link" href="/accounts/home"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+          <a class="mdl-navigation__link" href="/complaint/post"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">feedback</i>Post a complaint</a>
+          <a class="mdl-navigation__link" href="/mycomplaints"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>View My Complaints</a>
+          <div class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>View Complaints
+
+        <div >
+          <div class="mdl-layout-spacer"></div>
+         <div class="bar">
+                 
+               <button id="demo_menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon" data-upgraded=",MaterialButton">
+                  <i class="material-icons">more_vert</i>
+               </button>
+               <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                  for="demo_menu-lower-right">
+                  <a href = "/complaints/view/?get_by_domain=All"><li class="mdl-menu__item">All</li></a>
+                  <a href = "/complaints/view/?get_by_domain=Academic"><li class="mdl-menu__item">Academic</li></a>
+                  <a href = "/complaints/view/?get_by_domain=Mess"><li class="mdl-menu__item">Mess</li></a>
+                  <a href = "/complaints/view/?get_by_domain=Hostel"><li class="mdl-menu__item">Hostel</li></a>   
+               </ul>
+            
+         </div>
+         <div class="background"></div>
+      </div>
+
+          </div>
+          <div class="mdl-layout-spacer"></div>
+          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+        </nav>
+      </div>
+      {% block main %}
+      {% endblock %}
+      {% block Issueform%}
+      {% endblock%}
+</body>      
