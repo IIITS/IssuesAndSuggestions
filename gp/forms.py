@@ -19,3 +19,6 @@ class emailForm(forms.Form):
 	recepients = forms.CharField(widget= forms.TextInput(attrs={'class':'mdl-textfield__input'}))
 	body = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5'}))
 
+class suggestionForm(forms.Form):
+	text = forms.CharField(widget= forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'3'}))
+
