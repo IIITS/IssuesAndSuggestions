@@ -9,7 +9,7 @@ import keyring
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = keyring.get_password('IssuesAndSuggestions','SECRET_KEY')
+SECRET_KEY = "my%(k#d6t8)7q9d)7+y3e*sc(nll6tow6zg5gns3w1#rci34z^"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

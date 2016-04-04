@@ -66,4 +66,11 @@ class Upvote(models.Model):
 		unique_together = ('cid','uid')
 
 
+class Notes(models.Model):
+	code = models.CharField(db_index=True, max_length=20)
+	Note = models.TextField()
+	def __str__(self):
+		return self.code		
+
+
 
