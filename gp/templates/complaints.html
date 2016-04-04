@@ -24,8 +24,19 @@
     		<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
       Upvote
     </a>
+	{% if x.id in incharges%}
+	<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      ASSIGN
+    </a>
+{% endif %}
   </div>	
 	</div>	
+<form action="" method="post">{%csrf_token%}
+<div class="mdl-textfield mdl-js-textfield">
+  	{{form.text}}
+  	<label class="mdl-textfield__label">Post a suggestion</label>
+</div>
+</form>
 </center>
 <br>
 {% endfor %}
