@@ -18,13 +18,6 @@
  {%endfor%}
  <br>
  <br>
- <div id="radio-hostel">
-  	{%for i in form.hostel%}
-  		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" style="margin:5px;">
-  			{{i}}
-  		</label>
- 	{%endfor%}
- </div>
 <div class="mdl-textfield mdl-js-textfield">
   	{{form.description}}
   	<label class="mdl-textfield__label">Write about the issue here...</label>
@@ -39,20 +32,16 @@
 <script>
 $(document).ready(function(){
 	$('#radio-hostel').hide();
-	var radio = $('#domains_1');
-	alert(radio.val());
-	if (radio.attr('name') == 'domain' && radio.attr('value')){
-		radio.on('change',function(){	
-			var domainval = radio.attr('value'); 
-			alert(domainval);
-			if(domainval== 'Hostel'){
-				$('#radio-hostel').show();
-			}
-			else{
-				$('#radio-hostel').hide();
-			}
-		});
-	}	
+	$('#id_domain').on('change',function(){	
+	var domainval = $('#id_domain').val();
+	
+	if(domainval== 'Hostel'){
+		$('#radio-hostel').show();
+	}
+	else{
+		$('#radio-hostel').hide();
+	}
+	});
 });
 </script>
 {% endblock%}  

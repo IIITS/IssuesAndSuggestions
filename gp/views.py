@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from gp.models import Complaint, Domain, Upvote
-from gp.forms import LoginForm, postComplaintForm
+from gp.forms import LoginForm, postComplaintForm,emailForm,suggestionForm
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth import login
@@ -15,6 +15,7 @@ from django.db import IntegrityError
 from django.core.mail import send_mail
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.decorators import method_decorator
+from methods import Is_incharge
 
 # Create your views here.
 class LoginView(FormView):
@@ -24,7 +25,7 @@ class LoginView(FormView):
 		
 	def form_valid(self,form):
 		redirect_to = settings.LOGIN_REDIRECT_URL
-        	auth_login(self.request, form.get_user())
+        	login(self.request, form.get_user())
         	if self.request.session.test_cookie_worked():
            		self.request.session.delete_test_cookie()
         	return HttpResponseRedirect(redirect_to) 
@@ -83,12 +84,21 @@ class PostComplaint(FormView):
 
 
 
-class ViewComplaintByDomain(TemplateView):
+class ViewComplaintByDomain(FormView):
+	form_class = suggestionForm
 	template_name = 'complaints.html'
 
 	def dispatch(self,*args,**kwargs):
 		return super(ViewComplaintByDomain,self).dispatch(*args,**kwargs)
-
+	def form_valid(self,form):
+		text =  form.cleaned_data['text'].encode('utf-8')
+		#get which user posted the suggestion and complaint id
+		#store in suggestions table
+		#show this text using javascript under that compalint
+		return super(suggestionForm,self).form_valid(form)	
+	
+				
+		
 	def get_context_data(self,**kwargs):
 		context = super(ViewComplaintByDomain,self).get_context_data(**kwargs)
 		get_by_domain = self.request.GET.get('get_by_domain')
@@ -99,11 +109,18 @@ class ViewComplaintByDomain(TemplateView):
 		else:
 			c = Complaint.objects.filter(domain = get_by_domain)
 	
-
+		user = self.request.user.email
+		incharge = []
+		for complaint in c:
+			if(Is_incharge(complaint.domain,user)):
+				incharge.append(complaint.id)
+				
 		context['complaints'] = c	
-		
+		context['incharges'] = incharge
 		return context
 
+	def form_invalid(self,form):
+		return self.render_to_response(self.get_context_data(form=form))
 
 class viewMyComplaints(TemplateView):
 	template_name = 'mycomplaints.html'
