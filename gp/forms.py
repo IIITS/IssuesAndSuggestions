@@ -10,9 +10,9 @@ class LoginForm(AuthenticationForm):
 	
 
 class postComplaintForm(forms.Form):
-	domain = forms.ChoiceField(choices = get_list_of_domains(), widget=forms.RadioSelect(attrs={'class':'mdl-radio__button'}))
+	domain = forms.ChoiceField(choices = get_list_of_domains(), widget=forms.RadioSelect(attrs={'class':'mdl-radio__button','id':'domains'}))
 	title = forms.CharField(widget=forms.TextInput(attrs={'class':'mdl-textfield__input'}))
-	hostel = forms.ChoiceField(label='',choices = (('gh','Girls Hostel'),('bh','Boys Hostel')),widget=forms.RadioSelect(attrs={'class':'mdl-radio__button','id':'radio-hostel'}))
+	hostel = forms.ChoiceField(label='',choices = (('gh','Girls Hostel'),('bh','Boys Hostel')),widget=forms.RadioSelect(attrs={'class':'mdl-radio__button'}))
 	description = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5'}))
 
 class emailForm(forms.Form):
