@@ -5,36 +5,40 @@ from django.contrib.auth.models import User
 from gp.models import Complaint, Domain, Upvote
 from gp.forms import LoginForm, postComplaintForm
 from django.utils import timezone
+from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from gp.methods import Is_incharge
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 from django.core.mail import send_mail
-
+from django.views.decorators.debug import sensitive_post_parameters
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 class LoginView(FormView):
 	form_class = LoginForm
 	template_name = 'login.html'
-	success_url = '/accounts/home/'
-
-	def dispatch(self,*args,**kwargs):
-		return super(LoginView,self).dispatch(*args,**kwargs)
-
-	def get_context_data(self,**kwargs):
-		context = super(LoginView,self).get_context_data(**kwargs)
-		return context	
-
+	success_url = settings.LOGIN_REDIRECT_URL
+		
 	def form_valid(self,form):
-		login(self.request, form.get_user())
-		success_url = '/accounts/home/'
-
-		return super(LoginView,self).form_valid(form)
-
-	def form_invalid(self,form):
-		return self.render_to_response(self.get_context_data(form=form))
+		redirect_to = settings.LOGIN_REDIRECT_URL
+        	auth_login(self.request, form.get_user())
+        	if self.request.session.test_cookie_worked():
+           		self.request.session.delete_test_cookie()
+        	return HttpResponseRedirect(redirect_to) 
+	
+	def form_invalid(self,form):	
+		return super(LoginView, self).form_invalid(form)
+	@method_decorator(sensitive_post_parameters())	
+	def dispatch(self, *args, **kwargs):
+		if self.request.user.is_active:
+			return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+		return super(LoginView,self).dispatch(*args, **kwargs)
+	def get_context_data(self, **kwargs):
+			context = super(LoginView,self).get_context_data(**kwargs)
+			return context	
 
 
 class HomeView(TemplateView):
@@ -102,7 +106,7 @@ class ViewComplaintByDomain(TemplateView):
 
 
 class viewMyComplaints(TemplateView):
-	template_name = 'mycomplaint.html'
+	template_name = 'mycomplaints.html'
 
 	def dispatch(self,*args,**kwargs):
 		return super(viewMyComplaints,self).dispatch(*args,**kwargs)
