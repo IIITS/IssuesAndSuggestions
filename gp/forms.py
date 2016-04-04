@@ -15,4 +15,7 @@ class postComplaintForm(forms.Form):
 	hostel = forms.ChoiceField(label='',choices = (('gh','Girls Hostel'),('bh','Boys Hostel')),widget=forms.RadioSelect(attrs={'class':'mdl-radio__button','id':'radio-hostel'}))
 	description = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5'}))
 
+class emailForm(forms.Form):
+	recepients = forms.CharField(widget= forms.TextInput(attrs={'class':'mdl-textfield__input'}))
+	body = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5'}))
 
