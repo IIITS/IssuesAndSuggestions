@@ -69,3 +69,9 @@ left: -35px;
 	position:fixed;
 	height:100vh;
 }
+.mdl-layout__drawer{
+	position: fixed !important;
+}
+.mdl-layout__header{
+	position: fixed !important;
+}
