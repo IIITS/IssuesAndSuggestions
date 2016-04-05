@@ -45,4 +45,5 @@ def putStatus(QS):
 			D['status'] = "Under Process"
 		else:
 			D['status'] = "Registered"	
-	return QS		
+		Results.append(D)	
+	return Results		

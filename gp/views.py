@@ -44,7 +44,7 @@ class LoginView(FormView):
 
 
 class HomeView(TemplateView):
-	template_name ='home.html'
+	template_name ='homepage.html'
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(HomeView,self).dispatch(*args,**kwargs)
