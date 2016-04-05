@@ -45,4 +45,23 @@ display:inline-block;
 	line-height:32px;
 	padding:0 12px;
 	border-radius:16px;
-	background-color:#e4e4e4}
+	background-color:#e4e4e4
+}
+.tag-tip{
+-ms-transform: rotate(7deg);
+-webkit-transform: rotate(7deg);
+transform: rotate(-30deg);
+display: inline-block;
+height: 32px;
+font-size: 13px;
+font-weight: 500;
+color: rgba(0,0,0,0.6);
+line-height: 32px;
+padding: 30px 100px 2px 24px;
+border-radius: -9px;
+background-color: #e4e4e4;
+position: absolute;
+z-index: 2000;
+top: -33px;
+left: -35px;
+}
