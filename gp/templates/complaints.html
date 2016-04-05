@@ -15,7 +15,7 @@
 				DATE : {{x.posted_on|date:"d-m-y"}}
 
 			</h4>
-			
+			<div class="chip">Assigned</div>
 		</div>
 		<div class="mdl-card__supporting-text">
 			<b>{{x.description}}</b>
@@ -37,8 +37,10 @@
   	<label class="mdl-textfield__label">Post a suggestion</label>
 </div>
 </form>
+
 </center>
 <br>
+
 {% endfor %}
 {% endblock %}	
 

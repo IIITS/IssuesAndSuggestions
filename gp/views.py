@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth import logout
-from gp.methods import Is_incharge
+from gp.methods import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
@@ -51,9 +51,11 @@ class HomeView(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(HomeView,self).get_context_data(**kwargs)
-		context={
-			'top_issues':''
-		}
+		context={}
+		AllPosts = Complaint.objects.order_by('-posted_on')
+		Posts = putStatus(AllPosts)
+		context['posts']=Posts
+		return context
 
 class PostComplaint(FormView):
 	form_class = postComplaintForm
@@ -158,7 +160,11 @@ def Upvotes(request):
 	 
 	 
 def homeRedirect(request):
+<<<<<<< HEAD
+	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+=======
 	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 			
 
 	 
+>>>>>>> 32f348460fe511bb2cf8787f30b899745775585d
