@@ -51,6 +51,9 @@ class HomeView(TemplateView):
 
 	def get_context_data(self,**kwargs):
 		context = super(HomeView,self).get_context_data(**kwargs)
+		context={
+			'top_issues':''
+		}
 
 class PostComplaint(FormView):
 	form_class = postComplaintForm
@@ -155,4 +158,11 @@ def Upvotes(request):
 	 
 	 
 def homeRedirect(request):
+<<<<<<< HEAD
 	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+=======
+	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+			
+
+	 
+>>>>>>> 32f348460fe511bb2cf8787f30b899745775585d
