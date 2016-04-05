@@ -73,9 +73,23 @@ class Notes(models.Model):
 		return self.code	
 
 class UpgradedIssues(models.Model):
-	upgrade_date = models.DateTimeField()
-	issue = models.ForeignKey(Complaint, db_index=True)
-	upgraded_by = models.ForeignKey(User)			
+	upgrade_date = models.DateTimeField( db_index=True)
+	issue = models.ForeignKey(Complaint)
+	upgraded_by = models.ForeignKey(User)	
+	def __str__(self):
+		return self.issue  
 
-
+class ClosedIssues(models.Model):
+	closed_date = models.DateTimeField( db_index=True)
+	issue = issue = models.ForeignKey(Complaint)
+	closed_by = models.ForeignKey(User)				
+	def __str__(self):
+		return self.issue 
+class AssignedIssues(models.Model):
+	assigned_date = models.DateTimeField(db_index=True)
+	issue = models.ForeignKey(Complaint)
+	assigned_to = models.ForeignKey(User, related_name='worker')
+	assigned_by = models.ForeignKey(User, related_name='employer')
+	def __str__(self):
+		return self.issue
 

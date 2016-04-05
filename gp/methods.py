@@ -1,4 +1,6 @@
-from gp.models import Domain
+from gp.models import Domain, Complaint, UpgradedIssues
+from django.utils import timezone
+PROCESS_HRS = 5
 def get_list_of_domains():
 	ret = list()
 	domains = Domain.objects.all()
@@ -16,5 +18,31 @@ def Is_incharge(domain,incharge):
 	incharges = domain_obj.Incharge.split(',')
 	if incharge in incharges:
 		return True
-
 	return False	
+
+def getAllUnderProcess():
+	Results = list()
+	now = timezone.now()
+	complaints = Complaint.objects.order_by('-posted_on')
+	upissues = UpgradedIssues.objects.order_by('-upgrade_date')
+	closedissues = ClosedIssues.objects.order_by('-closed_date')
+	for com in complaints:
+		if com not in upissues and com not in closedissues:
+			if now - timezone.timedelta(hours=PROCESS_HRS) >= com.posted_on:
+				Results.append(com)
+	return Results	
+
+def PutStatus(QS):
+	upissues = UpgradedIssues.objects.order_by('-upgrade_date')
+	assignedissues = AssignedIssues.objects.order_by('-assigned_date')
+	closedissues = ClosedIssues.objects.order_by('-closed_date')
+	for q in QS:
+		if q in closedissues:
+			q['status'] = "Closed"
+		elif q in assignedissues:
+			q['status'] = "In Progress"	
+		elif q in upissues:
+			q['status'] = "Under Process"
+		else:
+			q['status'] = "Registered"	
+	return QS		
