@@ -33,7 +33,7 @@ class Complaint(models.Model):
 	who_can_see = models.CharField(max_length = 2,choices = (('All','Everybody'),('F','Faculty')))
 	solved  = models.BooleanField(default = False)
 	approved = models.BooleanField( default= False)
-	posted_on = models.DateTimeField(auto_now = True)
+	posted_on = models.DateTimeField(db_index=True,auto_now = True)
 	def __str__(self):
 			return str(self.title)
 
@@ -70,7 +70,12 @@ class Notes(models.Model):
 	code = models.CharField(db_index=True, max_length=20)
 	Note = models.TextField()
 	def __str__(self):
-		return self.code		
+		return self.code	
+
+class UpgradedIssues(models.Model):
+	upgrade_date = models.DateTimeField()
+	issue = models.ForeignKey(Complaint, db_index=True)
+	upgraded_by = models.ForeignKey(User)			
 
 
 
