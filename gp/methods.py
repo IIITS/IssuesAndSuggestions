@@ -33,17 +33,16 @@ def getAllUnderProcess():
 	return Results	
 
 def putStatus(QS):
-	
-	assignedissues = AssignedIssues.objects.order_by('-assigned_date')
-	closedissues = ClosedIssues.objects.order_by('-closed_date')
+	Results = list()
 	for q in QS:
-
+		D = dict()
+		D["issue"] = q
 		if ClosedIssues.objects.filter(pk=q.pk).exists():
-			q['status'] = "Closed"
+			D['status'] = "Closed"
 		elif AssignedIssues.objects.filter(pk=q.pk).exists():
-			q['status'] = "In Progress"	
+			D['status'] = "In Progress"	
 		elif UpgradedIssues.objects.filter(pk=q.pk).exists():
-			q['status'] = "Under Process"
+			D['status'] = "Under Process"
 		else:
-			q['status'] = "Registered"	
+			D['status'] = "Registered"	
 	return QS		
