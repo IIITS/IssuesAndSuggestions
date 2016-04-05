@@ -32,7 +32,7 @@ def getAllUnderProcess():
 				Results.append(com)
 	return Results	
 
-def PutStatus(QS):
+def putStatus(QS):
 	upissues = UpgradedIssues.objects.order_by('-upgrade_date')
 	assignedissues = AssignedIssues.objects.order_by('-assigned_date')
 	closedissues = ClosedIssues.objects.order_by('-closed_date')
