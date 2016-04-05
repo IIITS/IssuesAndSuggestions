@@ -15,6 +15,7 @@ from django.db import IntegrityError
 from django.core.mail import send_mail
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from methods import Is_incharge
 
 # Create your views here.
@@ -44,7 +45,7 @@ class LoginView(FormView):
 
 class HomeView(TemplateView):
 	template_name ='home.html'
-
+	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(HomeView,self).dispatch(*args,**kwargs)
 
@@ -55,7 +56,7 @@ class PostComplaint(FormView):
 	form_class = postComplaintForm
 	template_name = 'post_complaint.html'
 	success_url = '/complaints/view/'
-	
+	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(PostComplaint,self).dispatch(*args,**kwargs)
 	
@@ -87,7 +88,7 @@ class PostComplaint(FormView):
 class ViewComplaintByDomain(FormView):
 	form_class = suggestionForm
 	template_name = 'complaints.html'
-
+	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(ViewComplaintByDomain,self).dispatch(*args,**kwargs)
 	def form_valid(self,form):
@@ -124,7 +125,7 @@ class ViewComplaintByDomain(FormView):
 
 class viewMyComplaints(TemplateView):
 	template_name = 'mycomplaints.html'
-
+	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(viewMyComplaints,self).dispatch(*args,**kwargs)
 
@@ -137,7 +138,7 @@ class viewMyComplaints(TemplateView):
 		
 		return context
 
-
+@login_required
 def Upvotes(request):
 	 
 	 ID = request.GET.get('ID')
@@ -153,7 +154,8 @@ def Upvotes(request):
 			return HttpResponse("You already upvoted,"+str(c.getUpvotes()))
 	 
 	 
-
+def homeRedirect(request):
+	HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 			
 
 	 

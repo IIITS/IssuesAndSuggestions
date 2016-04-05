@@ -1,8 +1,9 @@
 from django.conf.urls import url
-from gp.views import PostComplaint ,LoginView,ViewComplaintByDomain,HomeView,Upvotes,viewMyComplaints
+from gp.views import *
 from django.conf import settings
 
 urlpatterns = [
+			url(r'^$', homeRedirect),
 			url(r'^complaint/post/$',PostComplaint.as_view(),name = 'postcomplaint'),
 			url(r'^accounts/login/$',LoginView.as_view(),name = 'login'),
 			url(r'^complaints/view/$',ViewComplaintByDomain.as_view(),name= 'complaints'),
