@@ -160,11 +160,5 @@ def Upvotes(request):
 	 
 	 
 def homeRedirect(request):
-<<<<<<< HEAD
 	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-=======
-	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
-			
 
-	 
->>>>>>> 32f348460fe511bb2cf8787f30b899745775585d
