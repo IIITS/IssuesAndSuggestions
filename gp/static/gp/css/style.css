@@ -65,3 +65,7 @@ z-index: 2000;
 top: -33px;
 left: -35px;
 }
+.iandsnavigation{
+	position:fixed;
+	height:100vh;
+}

@@ -71,13 +71,7 @@ class Notes(models.Model):
 	Note = models.TextField()
 	def __str__(self):
 		return self.code	
-
-class UpgradedIssues(models.Model):
-	upgrade_date = models.DateTimeField( db_index=True)
-	issue = models.ForeignKey(Complaint)
-	upgraded_by = models.ForeignKey(User)	
-	def __str__(self):
-		return self.issue  
+ 
 
 class ClosedIssues(models.Model):
 	closed_date = models.DateTimeField( db_index=True)

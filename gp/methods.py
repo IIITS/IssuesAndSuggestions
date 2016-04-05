@@ -1,4 +1,4 @@
-from gp.models import Domain, Complaint, UpgradedIssues, AssignedIssues, ClosedIssues
+from gp.models import Domain, Complaint,  AssignedIssues, ClosedIssues
 from django.utils import timezone
 PROCESS_HRS = 5
 def get_list_of_domains():
@@ -40,10 +40,10 @@ def putStatus(QS):
 		if ClosedIssues.objects.filter(pk=q.pk).exists():
 			D['status'] = "Closed"
 		elif AssignedIssues.objects.filter(pk=q.pk).exists():
-			D['status'] = "In Progress"	
-		elif UpgradedIssues.objects.filter(pk=q.pk).exists():
+			D['status'] = "Assigned"
+		elif (timezone.now() - timezone.timedelta(hours=PROCESS_HRS) ) >= q.posted_on :
 			D['status'] = "Under Process"
 		else:
-			D['status'] = "Registered"	
+			D['status'] = "Registered"		
 		Results.append(D)	
 	return Results		
