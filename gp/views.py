@@ -19,9 +19,20 @@ from django.contrib.auth.decorators import login_required
 from methods import Is_incharge
 
 # Create your views here.
-class LoginView(TemplateView):
+class LoginView(FormView):
+	form_class = LoginForm
 	template_name = 'login.html'
+	success_url = settings.LOGIN_REDIRECT_URL
+		
+	def form_valid(self,form):
+		redirect_to = settings.LOGIN_REDIRECT_URL
+        	login(self.request, form.get_user())
+        	if self.request.session.test_cookie_worked():
+           		self.request.session.delete_test_cookie()
+        	return HttpResponseRedirect(redirect_to) 
 	
+	def form_invalid(self,form):	
+		return super(LoginView, self).form_invalid(form)
 	@method_decorator(sensitive_post_parameters())	
 	def dispatch(self, *args, **kwargs):
 		if self.request.user.is_active:
@@ -31,10 +42,9 @@ class LoginView(TemplateView):
 			context = super(LoginView,self).get_context_data(**kwargs)
 			return context	
 
-
-class HomeView(FormView):
+class HomeView(TemplateView):
 	template_name ='complaints.html'
-	form_class = SuggestionForm
+	
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(HomeView,self).dispatch(*args,**kwargs)
@@ -50,13 +60,7 @@ class HomeView(FormView):
 		context['posts']=Posts
 		context['form']=SuggestionForm
 		return context
-	def form_valid(self,form):
-		text =  form.cleaned_data['text'].encode('utf-8')
-		#get which user posted the suggestion and complaint id
-		#store in suggestions table
-		#show this text using javascript under that compalint
-		return super(HomeView,self).form_valid(form)
-
+	
 class PostComplaint(FormView):
 	form_class = PostComplaintForm
 	template_name = 'post_complaint.html'
@@ -91,7 +95,6 @@ class PostComplaint(FormView):
 
 
 class ViewComplaintByDomain(FormView):
-	form_class = SuggestionForm
 	template_name = 'complaints.html'
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
@@ -124,7 +127,7 @@ class ViewComplaintByDomain(FormView):
 		return self.render_to_response(self.get_context_data(form=form))
 
 class viewMyComplaints(TemplateView):
-	template_name = 'mycomplaints.html'
+	template_name = 'complaints.html'
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(viewMyComplaints,self).dispatch(*args,**kwargs)
@@ -147,7 +150,7 @@ def Upvotes(request):
 	 user = request.user
 	 try:
 	 	if status == "300":
-		 	up = Upvote(cid = c, uid = userId)
+		 	up = Upvote(complaint = c, user = userId)
 		 	up.save()
 	 		cup = c.upvoteincrement()
 	 		c.save()

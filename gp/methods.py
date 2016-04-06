@@ -60,7 +60,7 @@ def putIncharge(QS, user):
 def putUpvotes(QS, user):
 	for q in QS:
 		complaint=q['issue']
-		if Upvote.objects.filter(cid=complaint,uid=user).exists():
+		if Upvote.objects.filter(complaint=complaint,user=user).exists():
 			q['upvoted']=True
 		else:
 			q['upvoted']=False
