@@ -55,6 +55,9 @@ class HomeView(FormView):
 		context={}
 		AllPosts = Complaint.objects.order_by('-posted_on')
 		Posts = putStatus(AllPosts)
+		user = self.request.user
+		Posts = putUpvotes(Posts, user)
+		Posts = putIncharge(Posts,user)
 		context['posts']=Posts
 		context['form']=SuggestionForm
 		return context
@@ -124,6 +127,7 @@ class ViewComplaintByDomain(FormView):
 		Posts = putStatus(c)
 		user = self.request.user.email
 		posts = putIncharge(Posts, user)
+		posts = putUpvotes(posts, user)
 		context['posts'] = posts
 		return context
 

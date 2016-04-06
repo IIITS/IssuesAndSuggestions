@@ -55,4 +55,13 @@ def putIncharge(QS, user):
 			q['incharge']=True
 		else:
 			q['incharge']=False
-	return QS						
+	return QS
+
+def putUpvotes(QS, user):
+	for q in QS:
+		complaint=q['issue']
+		if UpvoteTracker.objects.filter().exists():
+			q['upvoted']=True
+		else:
+			q['upvoted']=False
+	return QS									
