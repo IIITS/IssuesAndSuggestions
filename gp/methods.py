@@ -1,4 +1,4 @@
-from gp.models import Domain, Complaint,  AssignedIssues, ClosedIssues
+from gp.models import Domain, Complaint,  AssignedIssues, ClosedIssues, UpvoteTracker
 from django.utils import timezone
 PROCESS_HRS = 5
 def get_list_of_domains():

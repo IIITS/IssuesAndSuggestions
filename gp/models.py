@@ -22,15 +22,13 @@ class UserProfile(models.Model):
 
 
 class Complaint(models.Model):
-	STATUS = (('Registered','Registered'),('Assigned','Assigned'),('Solved','Solved'),('Closed','Closed'),)
+	
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	domain = models.ForeignKey(Domain, on_delete = models.CASCADE)
 	posted_by = models.ForeignKey(User, on_delete = models.CASCADE)
 	upvotes = models.PositiveIntegerField(default = 0)
-	#downvotes = models.PositiveIntegerField(default = 0)
-	status = models.CharField(max_length = 30,choices = STATUS,default = 'Registered')
-	who_can_see = models.CharField(max_length = 2,choices = (('All','Everybody'),('F','Faculty')))
+	
 	solved  = models.BooleanField(default = False)
 	approved = models.BooleanField( default= False)
 	posted_on = models.DateTimeField(db_index=True,auto_now = True)

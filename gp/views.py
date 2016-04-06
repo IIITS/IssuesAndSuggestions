@@ -19,20 +19,9 @@ from django.contrib.auth.decorators import login_required
 from methods import Is_incharge
 
 # Create your views here.
-class LoginView(FormView):
-	form_class = LoginForm
+class LoginView(TemplateView):
 	template_name = 'login.html'
-	success_url = settings.LOGIN_REDIRECT_URL
-		
-	def form_valid(self,form):
-		redirect_to = settings.LOGIN_REDIRECT_URL
-        	login(self.request, form.get_user())
-        	if self.request.session.test_cookie_worked():
-           		self.request.session.delete_test_cookie()
-        	return HttpResponseRedirect(redirect_to) 
 	
-	def form_invalid(self,form):	
-		return super(LoginView, self).form_invalid(form)
 	@method_decorator(sensitive_post_parameters())	
 	def dispatch(self, *args, **kwargs):
 		if self.request.user.is_active:
@@ -44,7 +33,7 @@ class LoginView(FormView):
 
 
 class HomeView(FormView):
-	template_name ='homepage.html'
+	template_name ='complaints.html'
 	form_class = SuggestionForm
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
@@ -163,8 +152,39 @@ def Upvotes(request):
 	 	return HttpResponse(cup)
 	 except IntegrityError:
 			return HttpResponse("You already upvoted,"+str(c.getUpvotes()))
+
+@login_required
+def DeUpvotes(request):
 	 
-	 
+	 ID = request.GET.get('ID')
+	 c = Complaint.objects.get(id=int(ID))
+	 userId = request.user
+	 try:
+	 	up = Upvote(cid = c, uid = userId)
+	 	up.save()
+	 	cup = c.upvote()
+	 	c.save()
+	 	return HttpResponse(cup)
+	 except IntegrityError:
+			retu
+
+@login_required
+def submitSuggestion(request):
+	 user = request.user
+	 try:
+		 issue = Complaint.objects.get(id=request.GET.get('ID'))
+		 submission = Submission(
+	 		complaint=issue,
+	 		author=user,
+	 		suggestion=request.GET.get('suggestion')
+	 		)
+	 	 submission.save()
+	 except ObjectDoesNotExist as Error:
+	 	return HttpResponse("500")
+	 except KeyError as Error:
+	 	return HttpResponse("500")
+	 return HttpResponse("200")
+
 def homeRedirect(request):
 	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
 
