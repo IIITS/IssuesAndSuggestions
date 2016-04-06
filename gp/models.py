@@ -87,3 +87,6 @@ class AssignedIssues(models.Model):
 	def __str__(self):
 		return self.issue
 
+class UpvoteTracker(models.Model):
+	issue = models.ForeignKey(Complaint, db_index=True)
+	user = models.ForeignKey(User, db_index=True)
