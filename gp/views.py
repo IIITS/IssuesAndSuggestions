@@ -3,7 +3,7 @@ from django.views.generic.edit import FormView
 from django.views.generic.base import TemplateView
 from django.contrib.auth.models import User
 from gp.models import Complaint, Domain, Upvote
-from gp.forms import LoginForm, postComplaintForm,emailForm,suggestionForm
+from gp.forms import *
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth import login
@@ -43,8 +43,9 @@ class LoginView(FormView):
 			return context	
 
 
-class HomeView(TemplateView):
+class HomeView(FormView):
 	template_name ='homepage.html'
+	form_class = SuggestionForm
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
 		return super(HomeView,self).dispatch(*args,**kwargs)
@@ -55,10 +56,17 @@ class HomeView(TemplateView):
 		AllPosts = Complaint.objects.order_by('-posted_on')
 		Posts = putStatus(AllPosts)
 		context['posts']=Posts
+		context['form']=SuggestionForm
 		return context
+	def form_valid(self,form):
+		text =  form.cleaned_data['text'].encode('utf-8')
+		#get which user posted the suggestion and complaint id
+		#store in suggestions table
+		#show this text using javascript under that compalint
+		return super(HomeView,self).form_valid(form)
 
 class PostComplaint(FormView):
-	form_class = postComplaintForm
+	form_class = PostComplaintForm
 	template_name = 'post_complaint.html'
 	success_url = '/complaints/view/'
 	@method_decorator(login_required)
@@ -91,7 +99,7 @@ class PostComplaint(FormView):
 
 
 class ViewComplaintByDomain(FormView):
-	form_class = suggestionForm
+	form_class = SuggestionForm
 	template_name = 'complaints.html'
 	@method_decorator(login_required)
 	def dispatch(self,*args,**kwargs):
@@ -101,7 +109,7 @@ class ViewComplaintByDomain(FormView):
 		#get which user posted the suggestion and complaint id
 		#store in suggestions table
 		#show this text using javascript under that compalint
-		return super(suggestionForm,self).form_valid(form)	
+		return super(ViewComplaintByDomain,self).form_valid(form)	
 	
 				
 		
@@ -111,18 +119,12 @@ class ViewComplaintByDomain(FormView):
 
 		if get_by_domain == 'All' or get_by_domain == None:
 			c = Complaint.objects.all()
-
 		else:
-			c = Complaint.objects.filter(domain = get_by_domain)
-	
+			c = Complaint.objects.filter(domain = get_by_domain).order_by('-posted_on')
+		Posts = putStatus(c)
 		user = self.request.user.email
-		incharge = []
-		for complaint in c:
-			if(Is_incharge(complaint.domain,user)):
-				incharge.append(complaint.id)
-				
-		context['complaints'] = c	
-		context['incharges'] = incharge
+		posts = putIncharge(Posts, user)
+		context['posts'] = posts
 		return context
 
 	def form_invalid(self,form):

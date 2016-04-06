@@ -1,24 +1,45 @@
 {% extends 'home.html'%}
 {% load staticfiles %}
 {% block main %}
-<span class="mdl-layout-title">Complaints</span>
+	<div style="margin-left:30%; margin-top:15%;"> 
+	<span class="mdl-layout-title">Trending Issues</span>
 	{% for x in posts%}
-	<center>
+	
 	<div class="demo-card-wide mdl-card mdl-shadow--2dp" style="width:550px;margin-top:10px;">
-		<div class="mdl-card__title mdl-card--expand" style="display:block; color:grey; min-height:100px; height:auto; margin-top:0; padding: 20px 10px;">
-			<span style="color:black;">{{ x.issue.title }}</span>
-			<br><br>{{ x.issue.description | linebreaksbr}}
+		<div class="mdl-card__title mdl-card--expand" style="color:black;height:176px;margin-top:0; padding:25px;">
+			<h4>{{x.issue.title}}<br></h4>
+			<div class="tag-tip">
+				<b>{{x.status}}</b>
+			</div>
 		</div>
-		<div class="tag-tip">
-			<b>{{x.status}}</b>
+		<div class="mdl-card__supporting-text">
+			<b>{{x.issue.description | linebreaksbr }}</b>
+			<br><div class="chip">{{x.issue.domain}}</div>
+			<br><div style="height:auto; width:100%; font-size: 10px; text-align: right; float:right">Posted on {{x.issue.posted_on|date:"d-m-y"}} by {{ x.issue.posted_by}}</div>
 		</div>
 		<div class="mdl-card__actions mdl-card--border">
-    		<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-      Upvote
+    		<a class="mdl-button mdl-button--fab mdl-js-button mdl-js-ripple-effect">
+      		<i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">thumb_up</i>
+    		</a><span style="padding:5px;">{{x.issue.upvotes}}</span>
+	{% if x.incharge %}
+	<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      ASSIGN
     </a>
+{% endif %}
   </div>	
-	</div>	
-</center>
+	</div>
+		
+<form action="" method="post">{%csrf_token%}
+<div class="mdl-textfield mdl-js-textfield">
+  	{{form.text}}
+  	<label class="mdl-textfield__label">Post a suggestion</label>
+
+</div>
+<br><button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Post</button>
+</form>
+
 <br>
+
 {% endfor %}
-{% endblock %}
+</div>
+{% endblock %}	

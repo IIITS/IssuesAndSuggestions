@@ -38,14 +38,15 @@ li{
 	margin-top:20px;
 }
 .chip {
-display:inline-block;
-	height:32px;font-size:13px;
-	font-weight:500;
-	color:rgba(0,0,0,0.6);
-	line-height:32px;
-	padding:0 12px;
-	border-radius:16px;
-	background-color:#e4e4e4
+display: inline-flex;
+height: auto;
+font-size: 12px;
+font-weight: 500;
+color: rgba(0,0,0,0.6);
+line-height: 32px;
+padding: 0px 7px;
+border-radius: 16px;
+background-color: #e4e4e4;
 }
 .tag-tip{
 -ms-transform: rotate(7deg);

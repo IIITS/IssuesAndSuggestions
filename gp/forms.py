@@ -9,16 +9,16 @@ class LoginForm(AuthenticationForm):
 	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'mdl-textfield__input', 'id':'password'}))
 	
 
-class postComplaintForm(forms.Form):
+class PostComplaintForm(forms.Form):
 	domain = forms.ChoiceField(choices = get_list_of_domains(), widget=forms.RadioSelect(attrs={'class':'mdl-radio__button','id':'domains'}))
 	title = forms.CharField(widget=forms.TextInput(attrs={'class':'mdl-textfield__input'}))
 	hostel = forms.ChoiceField(label='',choices = (('gh','Girls Hostel'),('bh','Boys Hostel')),widget=forms.RadioSelect(attrs={'class':'mdl-radio__button'}))
 	description = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5'}))
 
-class emailForm(forms.Form):
+class EmailForm(forms.Form):
 	recepients = forms.CharField(widget= forms.TextInput(attrs={'class':'mdl-textfield__input'}))
 	body = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5'}))
 
-class suggestionForm(forms.Form):
+class SuggestionForm(forms.Form):
 	text = forms.CharField(widget= forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'3'}))
 

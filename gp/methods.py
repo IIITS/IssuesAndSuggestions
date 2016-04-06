@@ -46,4 +46,13 @@ def putStatus(QS):
 		else:
 			D['status'] = "Registered"		
 		Results.append(D)	
-	return Results		
+	return Results
+
+def putIncharge(QS, user):
+	for q in QS:
+		complaint=q['issue']
+		if(Is_incharge(complaint.domain,user)):
+			q['incharge']=True
+		else:
+			q['incharge']=False
+	return QS						
