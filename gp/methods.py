@@ -1,4 +1,4 @@
-from gp.models import Domain, Complaint,  AssignedIssues, ClosedIssues, UpvoteTracker
+from gp.models import Domain, Complaint,  AssignedIssues, ClosedIssues, Upvote
 from django.utils import timezone
 PROCESS_HRS = 5
 def get_list_of_domains():
@@ -60,7 +60,7 @@ def putIncharge(QS, user):
 def putUpvotes(QS, user):
 	for q in QS:
 		complaint=q['issue']
-		if UpvoteTracker.objects.filter().exists():
+		if Upvote.objects.filter(cid=complaint,uid=user).exists():
 			q['upvoted']=True
 		else:
 			q['upvoted']=False

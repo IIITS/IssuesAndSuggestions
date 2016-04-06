@@ -142,31 +142,24 @@ class viewMyComplaints(TemplateView):
 def Upvotes(request):
 	 
 	 ID = request.GET.get('ID')
+	 status = request.GET.get('status')
 	 c = Complaint.objects.get(id=int(ID))
-	 userId = request.user
+	 user = request.user
 	 try:
-	 	up = Upvote(cid = c, uid = userId)
-	 	up.save()
-	 	cup = c.upvote()
-	 	c.save()
-	 	return HttpResponse(cup)
+	 	if status == "300":
+		 	up = Upvote(cid = c, uid = userId)
+		 	up.save()
+	 		cup = c.upvoteincrement()
+	 		c.save()
+	 		return HttpResponse("200,"+str(cup))
+	 	elif status == "200":
+	 		up = Upvote.objects.get(complaint=c, user=user)
+	 		up.delete()
+	 		cup = c.upvotedecrement()	
+	 		return HttpResponse("300,"+str(cup))
 	 except IntegrityError:
-			return HttpResponse("You already upvoted,"+str(c.getUpvotes()))
+			return HttpResponse("300,"+str(c.getUpvotes()))
 
-@login_required
-def DeUpvotes(request):
-	 
-	 ID = request.GET.get('ID')
-	 c = Complaint.objects.get(id=int(ID))
-	 userId = request.user
-	 try:
-	 	up = Upvote(cid = c, uid = userId)
-	 	up.save()
-	 	cup = c.upvote()
-	 	c.save()
-	 	return HttpResponse(cup)
-	 except IntegrityError:
-			retu
 
 @login_required
 def submitSuggestion(request):

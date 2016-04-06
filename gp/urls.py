@@ -9,7 +9,6 @@ urlpatterns = [
 			url(r'^complaints/view/$',ViewComplaintByDomain.as_view(),name= 'complaints'),
 			url(r'^accounts/home/$',HomeView.as_view(),name='homepage'),
 			url(r'^upvote/complaint/$',Upvotes,name = 'upvote'),
-			url(r'deupvote/complaint$', DeUpvotes),
 			url(r'^mycomplaints/$',viewMyComplaints.as_view(),name='mycomplaints'),
 			url(r'^submit/suggestion/$', submitSuggestion, name='submitsuggestion')		
 		]

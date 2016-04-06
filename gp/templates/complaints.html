@@ -20,16 +20,19 @@
 		</div>
 		<div class="mdl-card__actions mdl-card--border">
 			{% ifequal x.upvoted False %}
-    		<a class="thumbs-up" onclick="upvote({{x.issue.id}})">
-      			<i class="fa fa-thumbs-o-up"></i>
+				<a id="upvote-{{x.issue.id}}" data-upvoted="300" class="thumbs-up" onclick="upvote({{x.issue.id}})">
+			{%endiequal %}
+			{% ifequal x.upvoted True %}
+				<a id="upvote-{{x.issue.id}}" data-upvoted="200" class="thumbs-up" onclick="upvote({{x.issue.id}})">
+			{%endiequal %}	
+				{% ifequal x.upvoted False %}
+    				<i id="upvote-symbol-o-{{x.issue.id}}" class="fa fa-thumbs-o-up"></i>
+      			{% endifequal%}
+      			{% ifequal x.upvoted True %}
+      				<i id="upvote-symbol-up-{{x.issue.id}}" class="fa fa-thumbs-up"></i>
+      			{%endifequal%}
       		</a>
-      		{% endifequal%}
-      		{% ifequal x.upvoted True %}
-      		<a class="thumbs-up" onclick="deupvote({{x.issue.id}})">
-      			<i class="fa fa-thumbs-up"></i>
-      		</a>	
-      		{%endifequal%}
-      		<span style="padding:5px;">{{x.issue.upvotes}}</span>
+      		<span id="upvote-container-{{x.issue.id}}" style="padding:5px;">{{x.issue.upvotes}}</span>
 	{% if x.incharge %}
 	<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
       ASSIGN

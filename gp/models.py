@@ -35,8 +35,11 @@ class Complaint(models.Model):
 	def __str__(self):
 			return str(self.title)
 
-	def upvote(self):
+	def upvoteincrement(self):
 		self.upvotes +=1
+		return self.upvotes	
+	def upvotedecrement():
+		self.upvotes -=1
 		return self.upvotes	
 
 	def getUpvotes(self):
@@ -57,11 +60,11 @@ class Suggestion(models.Model):
 
 
 class Upvote(models.Model):
-	cid = models.ForeignKey(Complaint, on_delete = models.CASCADE)
-	uid = models.ForeignKey(User, on_delete = models.CASCADE)
+	complaint= models.ForeignKey(Complaint, on_delete = models.CASCADE)
+	user = models.ForeignKey(User, on_delete = models.CASCADE)
 
 	class Meta:
-		unique_together = ('cid','uid')
+		unique_together = ('complaint','user')
 
 
 class Notes(models.Model):
@@ -85,6 +88,3 @@ class AssignedIssues(models.Model):
 	def __str__(self):
 		return self.issue
 
-class UpvoteTracker(models.Model):
-	issue = models.ForeignKey(Complaint, db_index=True)
-	user = models.ForeignKey(User, db_index=True)
