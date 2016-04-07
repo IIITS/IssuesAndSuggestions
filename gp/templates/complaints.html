@@ -40,7 +40,7 @@
 {% endif %}
   </div>	
 	</div>
-<span><a>View Suggestions</a></span>		
+<span><a id="suggestions-click-{{x.issue.id}}" onclick="loadSuggestions({{x.issue.id}})" style="text-decoration:underline;"><br>View Suggestions<br></a></span>		
 <form action="" method="post">{%csrf_token%}
 <div class="mdl-textfield mdl-js-textfield">
   	{{form.text}}
@@ -48,10 +48,10 @@
 
 </div>
 <br><button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit" onclick="submitSuggestion({{x.issue.id}})">Post</button>
-</form>
-
-<br>
-
+</form><br>
+<div id="suggestions-display-{{x.issue.id}}">
+	
+</div>
 {% endfor %}
 </div>
 {% endblock %}	

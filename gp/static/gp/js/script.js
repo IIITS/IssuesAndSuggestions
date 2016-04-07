@@ -45,7 +45,23 @@ window.formSuggestionSubmit = function(CID){
 		
 	});
 }
-
+window.loadSuggestions = function(CID){
+	$.ajax({
+		url: '/get/suggestion/',
+		method: 'GET',
+		data:{
+			"ID" : CID,
+			"begin":"0",
+			"end":"10"
+		},
+		success:function(data){
+			datalist = data.split(',');
+			alert(datalist[0]);
+			$('#numupvotes-'+CID).html(datalist[1]);
+		}
+		
+	});
+}
 });
 
 

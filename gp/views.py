@@ -104,7 +104,7 @@ class ViewComplaintByDomain(FormView):
 		text =  form.cleaned_data['text'].encode('utf-8')
 		#get which user posted the suggestion and complaint id
 		#store in suggestions table
-		#show this text using javascript under that compalint
+		#show this text using javascript under that complaint
 		return super(ViewComplaintByDomain,self).form_valid(form)	
 	
 				
@@ -182,4 +182,16 @@ def submitSuggestion(request):
 
 def homeRedirect(request):
 	return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
+@login_required
+def getSuggestions(request):
+	user = request.user
+	cid = request.GET['cid']
+	begin = int(request.GET['begin'])
+	end =  int(request.GET['end'])
+	complaint = Complaint.objects.get(id=cid)
+	try:
+		suggestions = Suggestion.objects.filter(complaint=complaint)[begin:end].value_list()
+	except IndexError as Error:
+		suggestions = Suggestions.objects.filter(complaint=complaint)[begin:].value_list()	
+	return HttpResponse(suggestions)	
 

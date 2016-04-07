@@ -10,5 +10,6 @@ urlpatterns = [
 			url(r'^accounts/home/$',HomeView.as_view(),name='homepage'),
 			url(r'^upvote/complaint/',Upvotes,name = 'upvote'),
 			url(r'^mycomplaints/$',viewMyComplaints.as_view(),name='mycomplaints'),
-			url(r'^submit/suggestion/$', submitSuggestion, name='submitsuggestion')		
+			url(r'^submit/suggestion/$', submitSuggestion, name='submitsuggestion'),
+			url(r'^get/suggestion/$', getSuggestions, name='getsuggestion')	
 		]
