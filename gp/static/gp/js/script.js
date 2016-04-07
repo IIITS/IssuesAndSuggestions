@@ -10,10 +10,7 @@ window.upvote =function(CID){
 		},
 		success:function(data){
 			datalist = data.split(',');
-			
 			document.getElementById('upvote-container-'+CID).innerHTML=datalist[1];
-			console.log(datalist[1]);
-			console.log(datalist);
 			if(datalist[0] == "upvoted"){
 				$('#upvote-symbol-o-'+CID).removeClass("fa-thumbs-o-up").addClass("fa-thumbs-up");
 				$("#upvote-"+CID).removeClass("not-upvoted").addClass("upvoted");
@@ -29,16 +26,18 @@ window.upvote =function(CID){
 	});
 }
 
-window.formSuggestionSubmit = function(CID){
+window.submitSuggestion = function(CID){
+	
 	$.ajax({
 		url: '/submit/suggestion/',
 		method: 'GET',
 		data:{
 			"ID" : CID,
-			"suggestion":""
+			"suggestion":$('#suggest-'+CID).val();
 		},
 		success:function(data){
 			datalist = data.split(',');
+			alert($('#suggest-'+CID).val());
 			alert(datalist[0]);
 			$('#numupvotes-'+CID).html(datalist[1]);
 		}
@@ -51,13 +50,12 @@ window.loadSuggestions = function(CID){
 		method: 'GET',
 		data:{
 			"ID" : CID,
-			"begin":"0",
-			"end":"10"
+			"begin":$('#suggestions-click-'+CID).getAttribute("begin"),
+			"end":$('#suggestions-click-'+CID).getAttribute("end")
 		},
 		success:function(data){
 			datalist = data.split(',');
-			alert(datalist[0]);
-			$('#numupvotes-'+CID).html(datalist[1]);
+			
 		}
 		
 	});

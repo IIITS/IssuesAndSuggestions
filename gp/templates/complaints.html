@@ -40,15 +40,16 @@
 {% endif %}
   </div>	
 	</div>
-<span><a id="suggestions-click-{{x.issue.id}}" onclick="loadSuggestions({{x.issue.id}})" style="text-decoration:underline;"><br>View Suggestions<br></a></span>		
-<form action="" method="post">{%csrf_token%}
+<span><a id="suggestions-click-{{x.issue.id}}" data-begin="0" data-end="10" onclick="loadSuggestions({{x.issue.id}})" style="text-decoration:underline;"><br>View Suggestions<br></a></span>		
+
 <div class="mdl-textfield mdl-js-textfield">
-  	{{form.text}}
+	<form>
+  	<textarea id="suggest-{{x.issue.id}}" class="mdl-textfield__input" rows="3" name="text" cols="40"></textarea>
   	<label class="mdl-textfield__label">Post a suggestion</label>
 
 </div>
-<br><button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit" onclick="submitSuggestion({{x.issue.id}})">Post</button>
-</form><br>
+<br><button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"  onclick="submitSuggestion({{x.issue.id}})">Post</button>
+</form>
 <div id="suggestions-display-{{x.issue.id}}">
 	
 </div>
