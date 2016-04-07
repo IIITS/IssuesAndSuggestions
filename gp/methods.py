@@ -62,6 +62,8 @@ def putUpvotes(QS, user):
 		complaint=q['issue']
 		if Upvote.objects.filter(complaint=complaint).filter(user=user).exists():
 			q['upvoted']=True
+			q['upvotes']=str(len(Upvote.objects.filter(complaint=complaint)))
 		else:
 			q['upvoted']=False
+			q['upvotes']=str(len(Upvote.objects.filter(complaint=complaint)))
 	return QS									
