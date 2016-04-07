@@ -27,7 +27,7 @@ class Complaint(models.Model):
 	description = models.TextField()
 	domain = models.ForeignKey(Domain, on_delete = models.CASCADE)
 	posted_by = models.ForeignKey(User, on_delete = models.CASCADE)
-	upvotes = models.PositiveIntegerField(default = 0)
+	
 	
 	solved  = models.BooleanField(default = False)
 	approved = models.BooleanField( default= False)
@@ -35,15 +35,7 @@ class Complaint(models.Model):
 	def __str__(self):
 			return str(self.title)
 
-	def upvoteincrement(self):
-		self.upvotes +=1
-		return self.upvotes	
-	def upvotedecrement():
-		self.upvotes -=1
-		return self.upvotes	
-
-	def getUpvotes(self):
-		return self.upvotes	
+	
 
 class Solution(models.Model):
 	complaint = models.ForeignKey(Complaint, on_delete = models.CASCADE)
@@ -62,9 +54,10 @@ class Suggestion(models.Model):
 class Upvote(models.Model):
 	complaint= models.ForeignKey(Complaint, on_delete = models.CASCADE)
 	user = models.ForeignKey(User, on_delete = models.CASCADE)
-
-	class Meta:
-		unique_together = ('complaint','user')
+	def __str__(self):
+		return str(self.complaint)  + " " + str(self.user)
+	def getUpvotes(self,complaint):
+		return len(self.objects.filter(complaint=complaint))	
 
 
 class Notes(models.Model):

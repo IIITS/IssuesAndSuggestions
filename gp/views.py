@@ -17,6 +17,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from methods import Is_incharge
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 class LoginView(FormView):
@@ -143,26 +144,24 @@ class viewMyComplaints(TemplateView):
 
 @login_required
 def Upvotes(request):
-	 
-	 ID = request.GET.get('ID')
-	 status = request.GET.get('status')
-	 c = Complaint.objects.get(id=int(ID))
-	 user = request.user
-	 try:
-	 	if status == "300":
-		 	up = Upvote(complaint = c, user = userId)
-		 	up.save()
-	 		cup = c.upvoteincrement()
-	 		c.save()
-	 		return HttpResponse("200,"+str(cup))
-	 	elif status == "200":
-	 		up = Upvote.objects.get(complaint=c, user=user)
-	 		up.delete()
-	 		cup = c.upvotedecrement()	
-	 		return HttpResponse("300,"+str(cup))
-	 except IntegrityError:
-			return HttpResponse("300,"+str(c.getUpvotes()))
+	ID = request.GET.get('ID')
+	status = request.GET.get('status').split()[1]
+	c = Complaint.objects.get(id=int(ID))
+	user = request.user
 
+	if status == "not-upvoted":
+		if not Upvote.objects.filter(complaint=c).filter(user=user).exists():
+		 	up = Upvote(complaint = c, user = user)
+		 	up.save()
+			return HttpResponse("upvoted,"+str(len(Upvote.objects.filter(complaint=c))))
+		return HttpResponse("not-upvoted,"+str(len(Upvote.objects.filter(complaint=c))))
+	elif status == "upvoted":
+		up = Upvote.objects.filter(complaint=c).filter(user=user)
+		if len(up) == 1:
+			up[0].delete()
+	 		return HttpResponse("not-upvoted,"+str(len(Upvote.objects.filter(complaint=c))))
+		return HttpResponse("upvoted,"+str(len(Upvote.objects.filter(complaint=c))))
+			
 
 @login_required
 def submitSuggestion(request):

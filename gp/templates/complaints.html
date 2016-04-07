@@ -20,11 +20,11 @@
 		</div>
 		<div class="mdl-card__actions mdl-card--border">
 			{% ifequal x.upvoted False %}
-				<a id="upvote-{{x.issue.id}}" data-upvoted="300" class="thumbs-up" onclick="upvote({{x.issue.id}})">
-			{%endiequal %}
+				<a id="upvote-{{x.issue.id}}"  class="thumbs-up not-upvoted" onclick="upvote({{x.issue.id}})">
+			{%endifequal %}
 			{% ifequal x.upvoted True %}
-				<a id="upvote-{{x.issue.id}}" data-upvoted="200" class="thumbs-up" onclick="upvote({{x.issue.id}})">
-			{%endiequal %}	
+				<a id="upvote-{{x.issue.id}}"  class="thumbs-up upvoted" onclick="upvote({{x.issue.id}})">
+			{%endifequal %}	
 				{% ifequal x.upvoted False %}
     				<i id="upvote-symbol-o-{{x.issue.id}}" class="fa fa-thumbs-o-up"></i>
       			{% endifequal%}
