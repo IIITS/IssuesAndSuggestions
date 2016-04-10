@@ -51,7 +51,7 @@ def putStatus(QS):
 def putIncharge(QS, user):
 	for q in QS:
 		complaint=q['issue']
-		if(Is_incharge(complaint.domain,user.email)):
+		if(Is_incharge(complaint.domain,user)):
 			q['incharge']=True
 		else:
 			q['incharge']=False

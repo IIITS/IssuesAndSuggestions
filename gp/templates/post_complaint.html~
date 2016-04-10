@@ -5,12 +5,17 @@
 <center>
 <h3 style="color:blue;"> Post an Issue</h3>
 <form action="" method="post">{% csrf_token%}
+	{% if form.errors%}
+		{{form.non_field_errors}}
+	{% endif %}
   <div class="mdl-textfield mdl-js-textfield">
+	{{form.title.errors}}
     {{form.title}}
     <label class="mdl-textfield__label">Enter the title...</label>
   </div>
   <br>
   <br>
+{{form.domain.errors}}
  {%for i in form.domain%}
   	<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" style="margin:5px;">
   		{{i}}
@@ -18,13 +23,22 @@
  {%endfor%}
  <br>
  <br>
+ <div id="radio-hostel">
+	{{form.hostel.errors}}
+  	{%for i in form.hostel%}
+  		<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" style="margin:5px;">
+  			{{i}}
+  		</label>
+ 	{%endfor%}
+ </div>
 <div class="mdl-textfield mdl-js-textfield">
+	{{form.description.errors}}
   	{{form.description}}
   	<label class="mdl-textfield__label">Write about the issue here...</label>
 </div>
 <br>
 <br>
-<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" type="submit">
  POST
 </button>
 </form>
@@ -32,16 +46,19 @@
 <script>
 $(document).ready(function(){
 	$('#radio-hostel').hide();
-	$('#id_domain').on('change',function(){	
-	var domainval = $('#id_domain').val();
-	
-	if(domainval== 'Hostel'){
-		$('#radio-hostel').show();
-	}
-	else{
-		$('#radio-hostel').hide();
-	}
-	});
+	var radio = $('#domains_1');
+	if (radio.attr('name') == 'domain' && radio.attr('value')){
+		radio.on('change',function(){	
+			var domainval = radio.attr('value'); 
+			alert(domainval);
+			if(domainval== 'Hostel'){
+				$('#radio-hostel').show();
+			}
+			else{
+				$('#radio-hostel').hide();
+			}
+		});
+	}	
 });
 </script>
 {% endblock%}  

@@ -13,5 +13,5 @@ urlpatterns = [
 			url(r'^submit/suggestion/$', submitSuggestion, name='submitsuggestion'),
 			url(r'^get/suggestion/$', getSuggestions, name='getsuggestion'),
 			url(r'^signout/$', signout, name='logout'),
-			#url(r'^changepassword/$',changepassword , name='changepassword'),	
+			url(r'^changepassword/$',changepassword , name='changepassword'),	
 		]

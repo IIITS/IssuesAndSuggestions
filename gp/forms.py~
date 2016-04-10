@@ -22,5 +22,5 @@ class Email_Form(forms.Form):
 class SuggestionForm(forms.Form):
 	text = forms.CharField(widget= forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'3'}))
 
-
+class password_ChangeForm(PasswordChangeForm):
 	
