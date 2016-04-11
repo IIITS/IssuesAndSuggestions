@@ -56,7 +56,7 @@
       </p>
     </div>
     <div class="mdl-dialog__actions">
-      <button type="submit" class="mdl-button" onclick="disableAssignAndShowSolved({{x.issue.id}})">Send Email</button>
+      <button type="submit" class="mdl-button" id="assigned-{{x.issue.id}}">Send Email</button>
 	</form>
       <button type="button" class="mdl-button close">Close</button>
     </div>
@@ -97,13 +97,12 @@
 	    });
 	}
 	function disableAssignAndShowSolved(CID){
-		var assignButtonId = "#showModal-"+CID;
-	    var closeButton = "#issue-close-"+CID;
-	    $(closeButton).removeClass('solved').addClass('show');
-		$(assignButtonId).addClass('mdl-button mdl-js-button mdl-button--raised disabled');
+	  assignButtonId = "#showModal-"+CID;
+	  closeButton = "#issue-close-"+CID;
+	  $(assignButtonId).html('CLOSE');
 		
-	}
-    
+	}  
+  
 </script>
 {% endblock %}	
 

@@ -11,9 +11,9 @@ class LoginForm(AuthenticationForm):
 
 class PostComplaintForm(forms.Form):
 	domain = forms.ChoiceField(choices = get_list_of_domains(), widget=forms.RadioSelect(attrs={'class':'mdl-radio__button','id':'domains'}))
-	title = forms.CharField(widget=forms.TextInput(attrs={'class':'mdl-textfield__input','pattern':'.{1,}','required title':'1 character minimum'}))
+	title = forms.CharField(widget=forms.TextInput(attrs={'class':'mdl-textfield__input','pattern':'.{1,}','required title':'Please provide a title'}))
 	hostel = forms.ChoiceField(required=False,label='',choices = (('gh','Girls Hostel'),('bh','Boys Hostel')),widget=forms.RadioSelect(attrs={'class':'mdl-radio__button'}))
-	description = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5','pattern':'.{1,}','required title':'1 character minimum'}))
+	description = forms.CharField(widget = forms.Textarea(attrs={'class':'mdl-textfield__input','rows':'5','pattern':'.{1,}','required title':'Write something about the issue'}))
 
 class Email_Form(forms.Form):
 	recep = forms.CharField(widget= forms.TextInput(attrs={'class':'mdl-textfield__input'}))

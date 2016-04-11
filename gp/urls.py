@@ -1,6 +1,8 @@
 from django.conf.urls import url
 from gp.views import *
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import password_change
 
 urlpatterns = [
 			url(r'^$', homeRedirect),
@@ -13,5 +15,5 @@ urlpatterns = [
 			url(r'^submit/suggestion/$', submitSuggestion, name='submitsuggestion'),
 			url(r'^get/suggestion/$', getSuggestions, name='getsuggestion'),
 			url(r'^signout/$', signout, name='logout'),
-			#url(r'^changepassword/$',changepassword , name='changepassword'),	
+			url(r'^changepassword/',login_required(password_change),name='passwordchange',kwargs={'post_change_redirect':settings.LOGIN_URL}),	
 		]

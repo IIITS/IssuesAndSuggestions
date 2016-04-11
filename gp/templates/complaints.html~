@@ -47,20 +47,23 @@
 	{% endif %}
  <div class="mdl-textfield mdl-js-textfield">
      	{{form.recep}}
-	<label class="mdl-textfield__label">Enter the title...</label>
+	<label class="mdl-textfield__label">Enter the email Address</label>
 </div>
  <div class="mdl-textfield mdl-js-textfield">
 	{{form.bod}}
-<label class="mdl-textfield__label">Enter the title...</label>
+<label class="mdl-textfield__label">Write something</label>
 </div>		
       </p>
     </div>
     <div class="mdl-dialog__actions">
-      <button type="submit" class="mdl-button">Send Email</button>
+      <button type="submit" class="mdl-button" id="assigned-{{x.issue.id}}">Send Email</button>
 	</form>
       <button type="button" class="mdl-button close">Close</button>
     </div>
   </dialog>
+  <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect solved" id="issue-close-{{x.issue.id}}">
+      SOLVED
+    </button>
 {% endif %}
   </div>	
 	</div>
@@ -93,6 +96,17 @@
 	      dialog.close();
 	    });
 	}
+	function disableAssignAndShowSolved(CID){
+	  assignButtonId = "#showModal-"+CID;
+	  closeButton = "#issue-close-"+CID;
+	  $(assignButtonId).html('CLOSE');
+		
+	}  
+
+$('[id^=assigned-]').addEventListener("click",function(){
+	alert(this.id);
+	document.getElementById()
+});  
 </script>
 {% endblock %}	
 
