@@ -85,3 +85,9 @@ left: -35px;
 .mdl-layout__header{
 	position: fixed !important;
 }
+.solved{
+	display:none;
+}
+.show{
+	display:block;
+}
