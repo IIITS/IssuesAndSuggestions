@@ -17,7 +17,7 @@
   <br>
 {{form.domain.errors}}
  {%for i in form.domain%}
-  	<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" style="margin:5px;">
+  	<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" name="radBtn" style="margin:5px;">
   		{{i}}
   	</label>
  {%endfor%}
@@ -46,19 +46,16 @@
 <script>
 $(document).ready(function(){
 	$('#radio-hostel').hide();
-	var radio = $('#domains_1');
-	if (radio.attr('name') == 'domain' && radio.attr('value')){
-		radio.on('change',function(){	
-			var domainval = radio.attr('value'); 
-			alert(domainval);
-			if(domainval== 'Hostel'){
-				$('#radio-hostel').show();
-			}
-			else{
-				$('#radio-hostel').hide();
-			}
-		});
-	}	
+	$('#domains_0,#domains_1,#domains_2').each(function () {
+        $(this).change(function () {
+            if ($('form input[type=radio]:checked').val() == "Hostel"){
+                $('#radio-hostel').show();
+            }
+            else {
+                $('#radio-hostel').hide();
+            }
+        })
+    });
 });
 </script>
 {% endblock%}  
