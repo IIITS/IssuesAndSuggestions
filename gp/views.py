@@ -73,7 +73,7 @@ class PostComplaint(FormView):
 			domain = form.cleaned_data['domain'].encode('utf-8')
 			try:
 				domain_obj = Domain.objects.get(name=str(domain))
-			except DoesNotExist:
+			except ObjectDoesNotExist:
 				domain_obj= Domain.objects.all()[0] 
 
 				
@@ -81,7 +81,9 @@ class PostComplaint(FormView):
 			description = form.cleaned_data['description'].encode('utf-8')
 			# form.cleaned_data['hostel'] returns empty string when checked domain is Academic or Mess
 			# when Hostel is checked, We have show it only to Girls group or only to boys group
-			#send_mail('Issue Registered in the portal.Sub = '+title , description,'IandS@iiits.in',domain_obj.Incharge.split(','),fail_silently = False)
+			resultSendIncharge = send_mail('Issue Registered in the portal with title \"' + title + '\"', description,'tremblerz@gmail.com', domain_obj.Incharge.split(','), fail_silently = False)
+			resultSendApplicant = send_mail('Your Issue with title \"' + title + '\"' + ' has been registered', "Thanks for expressing your inconvenience.\nYour issue has been registered on the website and email has been sent to faculty incharge\n\nThanks and Regards\nIT Support",'tremblerz@gmail.com', ['abhishek.s14@iiits.in'], fail_silently=False)
+			#TODO: Check the return values from send_mail
 			c = Complaint(title=title,description=description,domain=domain_obj,posted_by = self.request.user)
 			c.save()
 			return super(PostComplaint,self).form_valid(form)
