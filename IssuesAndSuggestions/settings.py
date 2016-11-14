@@ -1,5 +1,7 @@
 
 import os
+import ldap
+from django_auth_ldap.config import LDAPSearch, NestedActiveDirectoryGroupType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,7 +33,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'gp',
-    'django_python3_ldap',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,55 +128,36 @@ EMAIL_HOST_USER = 'tremblerz@gmail.com'
 EMAIL_HOST_PASSWORD = 'Bx|=x(b-$r'
 EMAIL_PORT = 587
 
-# The URL of the LDAP server.
-LDAP_AUTH_URL = "ldap://10.0.1.3:389"
-
-# Initiate TLS on connection.
-LDAP_AUTH_USE_TLS = False
-
-# The LDAP search base for looking up users.
-LDAP_AUTH_SEARCH_BASE = "ou=people,dc=iiits,dc=in"
-
-# The LDAP class that represents a user.
-LDAP_AUTH_OBJECT_CLASS = "inetOrgPerson"
-
-# User model fields mapped to the LDAP
-# attributes that represent them.
-LDAP_AUTH_USER_FIELDS = {
-    "username": "uid",
-    "first_name": "givenName",
-    "last_name": "sn",
-    "email": "mail",
+# Binding and connection options
+AUTH_LDAP_SERVER_URI = "ldap://10.0.1.3:389"
+AUTH_LDAP_BIND_DN = 'uid=abhishek.s14,ou=ug2014_cse,ou=ug2014,ou=ug,ou=students,ou=people,dc=iiits,dc=in'
+AUTH_LDAP_BIND_PASSWORD = "abhi2426"
+AUTH_LDAP_CONNECTION_OPTIONS = {
+    ldap.OPT_DEBUG_LEVEL: 1,
+    ldap.OPT_REFERRALS: 0,
 }
 
-# A tuple of django model fields used to uniquely identify a user.
-LDAP_AUTH_USER_LOOKUP_FIELDS = ("username",)
+# User and group search objects and types
+AUTH_LDAP_USER_SEARCH = LDAPSearch("OU=people,DC=iiits,DC=in",
+    ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)")
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("OU=people,DC=iiits,DC=in",
+    ldap.SCOPE_SUBTREE, "(objectClass=group)")
+AUTH_LDAP_GROUP_TYPE = NestedActiveDirectoryGroupType()
 
-# Path to a callable that takes a dict of {model_field_name: value},
-# returning a dict of clean model data.
-# Use this to customize how data loaded from LDAP is saved to the User model.
-LDAP_AUTH_CLEAN_USER_DATA = "django_python3_ldap.utils.clean_user_data"
+# Cache settings
+AUTH_LDAP_CACHE_GROUPS = True
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
 
-# Path to a callable that takes a user model and a dict of {ldap_field_name: [value]},
-# and saves any additional user relationships based on the LDAP data.
-# Use this to customize how data loaded from LDAP is saved to User model relations.
-# For customizing non-related User model fields, use LDAP_AUTH_CLEAN_USER_DATA.
-LDAP_AUTH_SYNC_USER_RELATIONS = "django_python3_ldap.utils.sync_user_relations"
+# What to do once the user is authenticated
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail"
+}
 
-# Path to a callable that takes a dict of {ldap_field_name: value},
-# returning a list of [ldap_search_filter]. The search filters will then be AND'd
-# together when creating the final search filter.
-LDAP_AUTH_FORMAT_SEARCH_FILTERS = "django_python3_ldap.utils.format_search_filters"
+AUTH_LDAP_FIND_GROUP_PERMS = True
 
-# Path to a callable that takes a dict of {model_field_name: value}, and returns
-# a string of the username to bind to the LDAP server.
-# Use this to support different types of LDAP server.
-LDAP_AUTH_FORMAT_USERNAME = "django_python3_ldap.utils.format_username_openldap"
-
-# Sets the login domain for Active Directory users.
-LDAP_AUTH_ACTIVE_DIRECTORY_DOMAIN = None
-
-# The LDAP username and password of a user for authenticating the `ldap_sync_users`
-# management command. Set to None if you allow anonymous queries.
-LDAP_AUTH_CONNECTION_USERNAME = None
-LDAP_AUTH_CONNECTION_PASSWORD = None
+# The backends needed to make this work.
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend')
