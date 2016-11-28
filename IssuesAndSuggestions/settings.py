@@ -124,14 +124,14 @@ LOGOUT_URL = LOGIN_URL
 EMAIL_USE_TLS = True
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'tremblerz@gmail.com'
-EMAIL_HOST_PASSWORD = 'Bx|=x(b-$r'
+EMAIL_HOST_USER = ''#This will be changed once IT team gives credentials
+EMAIL_HOST_PASSWORD = ''#This will be changed once IT team gives credentials
 EMAIL_PORT = 587
 
 # Binding and connection options
 AUTH_LDAP_SERVER_URI = "ldap://10.0.1.3:389"
-AUTH_LDAP_BIND_DN = 'uid=abhishek.s14,ou=ug2014_cse,ou=ug2014,ou=ug,ou=students,ou=people,dc=iiits,dc=in'
-AUTH_LDAP_BIND_PASSWORD = "abhi2426"
+AUTH_LDAP_BIND_DN = 'uid=abhishek.s14,ou=ug2014_cse,ou=ug2014,ou=ug,ou=students,ou=people,dc=iiits,dc=in'#This will be changed once IT team gives credentials
+AUTH_LDAP_BIND_PASSWORD = ""#This will be changed once IT team gives credentials
 AUTH_LDAP_CONNECTION_OPTIONS = {
     ldap.OPT_DEBUG_LEVEL: 1,
     ldap.OPT_REFERRALS: 0,
@@ -139,7 +139,7 @@ AUTH_LDAP_CONNECTION_OPTIONS = {
 
 # User and group search objects and types
 AUTH_LDAP_USER_SEARCH = LDAPSearch("OU=people,DC=iiits,DC=in",
-    ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)")
+    ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch("OU=people,DC=iiits,DC=in",
     ldap.SCOPE_SUBTREE, "(objectClass=group)")
 AUTH_LDAP_GROUP_TYPE = NestedActiveDirectoryGroupType()
